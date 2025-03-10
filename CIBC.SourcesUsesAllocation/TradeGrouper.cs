@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
 namespace CIBC.SourcesUsesAllocation;
 
-public class TradeGrouper : ITradeGrouper
+public class TradeGrouper(ILogger<TradeGrouper> logger) : ITradeGrouper
 {
-    private readonly ILogger<TradeGrouper> _logger;
-
-    public TradeGrouper(ILogger<TradeGrouper> logger) => _logger = logger;
-
     public Dictionary<string, List<Trade>> GroupTrades(IEnumerable<Trade> trades)
     {
-        _logger.LogDebug("Grouping trades by SecurityId");
+        logger.LogDebug("Grouping trades by SecurityId");
         var result = new Dictionary<string, List<Trade>>();
         foreach (var trade in trades)
         {
@@ -26,10 +23,10 @@ public class TradeGrouper : ITradeGrouper
 
         foreach (var kvp in result)
         {
-            kvp.Value.Sort((a, b) => a.TradeId.CompareTo(b.TradeId)); // Sort in-place
+            kvp.Value.Sort((a, b) => string.Compare(a.TradeId, b.TradeId, StringComparison.Ordinal)); // Sort in-place
         }
 
-        _logger.LogInformation("Trades grouped into {GroupCount} security groups", result.Count);
+        logger.LogInformation("Trades grouped into {GroupCount} security groups", result.Count);
         return result;
     }
 }

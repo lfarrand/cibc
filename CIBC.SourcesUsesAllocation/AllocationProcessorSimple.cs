@@ -7,15 +7,15 @@ using Microsoft.Extensions.Logging;
 
 namespace CIBC.SourcesUsesAllocation;
 
-public class AllocationProcessor : IAllocationProcessor
+public class AllocationProcessorSimple : IAllocationProcessor
 {
-    private readonly ILogger<AllocationProcessor> _logger;
+    private readonly ILogger<AllocationProcessorSimple> _logger;
     private readonly ITradeGrouper _tradeGrouper;
     private readonly ISecurityGroupProcessor _securityGroupProcessor;
     private readonly IAllocationRulesProvider _rulesProvider;
     private const int ChannelCapacity = 10;
 
-    public AllocationProcessor(ILogger<AllocationProcessor> logger, ITradeGrouper tradeGrouper, ISecurityGroupProcessor securityGroupProcessor, IAllocationRulesProvider rulesProvider )
+    public AllocationProcessorSimple(ILogger<AllocationProcessorSimple> logger, ITradeGrouper tradeGrouper, ISecurityGroupProcessor securityGroupProcessor, IAllocationRulesProvider rulesProvider )
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _tradeGrouper = tradeGrouper;
@@ -50,37 +50,15 @@ public class AllocationProcessor : IAllocationProcessor
         _logger.LogInformation("Starting allocation process with {TradeCount} trades and {RuleCount} rules",
             trades.Count, rules.Count);
 
-        var resultChannel = Channel.CreateBounded<AllocationResult>(new BoundedChannelOptions(ChannelCapacity)
-            { FullMode = BoundedChannelFullMode.Wait, SingleWriter = false, SingleReader = true });
-        var usedTradesChannel = Channel.CreateBounded<string>(new BoundedChannelOptions(ChannelCapacity)
-            { FullMode = BoundedChannelFullMode.Wait, SingleWriter = false, SingleReader = true });
-
         var usedTrades = new HashSet<string>(trades.Count / 2); // Pre-allocate capacity
         var exceptions = new List<Exception>();
-
-        var usedTradesTask = Task.Run(async () =>
-        {
-            try
-            {
-                await foreach (var tradeId in usedTradesChannel.Reader.ReadAllAsync())
-                {
-                    usedTrades.Add(tradeId);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error collecting used trades");
-                exceptions.Add(new InvalidOperationException("Error collecting used trades", ex));
-            }
-        });
 
         var tradesBySecurity = _tradeGrouper.GroupTrades(trades);
         var processTasks = new List<Task>(tradesBySecurity.Count);
         
         foreach (var group in tradesBySecurity)
         {
-            processTasks.Add(_securityGroupProcessor.ProcessSecurityGroupAsync(group.Key, group.Value, rules,
-                resultChannel, usedTradesChannel, usedTrades));
+            processTasks.Add(_securityGroupProcessor.ProcessSecurityGroupAsync(group.Key, group.Value, rules));
         }
 
         try
