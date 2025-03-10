@@ -1,4 +1,4 @@
-using CIBC;
+using CIBC.SourcesUsesAllocation;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();

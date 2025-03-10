@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IuidIchoF0M=",
+  "dgSpecHash": "kPZAdD2ty0k=",
   "success": true,
-  "projectFilePath": "/Users/leefarrand/RiderProjects/CIBC/CIBC/CIBC.csproj",
+  "projectFilePath": "/Users/leefarrand/RiderProjects/CIBC/CIBC.SourcesUsesAllocation/CIBC.SourcesUsesAllocation.csproj",
   "expectedPackageFiles": [
     "/Users/leefarrand/.nuget/packages/microsoft.extensions.configuration/9.0.1/microsoft.extensions.configuration.9.0.1.nupkg.sha512",
     "/Users/leefarrand/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.1/microsoft.extensions.configuration.abstractions.9.0.1.nupkg.sha512",

@@ -1491,11 +1491,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/leefarrand/RiderProjects/CIBC/CIBC/CIBC.csproj",
-      "projectName": "CIBC",
-      "projectPath": "/Users/leefarrand/RiderProjects/CIBC/CIBC/CIBC.csproj",
+      "projectUniqueName": "/Users/leefarrand/RiderProjects/CIBC/CIBC.SourcesUsesAllocation/CIBC.SourcesUsesAllocation.csproj",
+      "projectName": "CIBC.SourcesUsesAllocation",
+      "projectPath": "/Users/leefarrand/RiderProjects/CIBC/CIBC.SourcesUsesAllocation/CIBC.SourcesUsesAllocation.csproj",
       "packagesPath": "/Users/leefarrand/.nuget/packages/",
-      "outputPath": "/Users/leefarrand/RiderProjects/CIBC/CIBC/obj/",
+      "outputPath": "/Users/leefarrand/RiderProjects/CIBC/CIBC.SourcesUsesAllocation/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/leefarrand/.nuget/NuGet/NuGet.Config"
@@ -1522,7 +1522,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -1549,7 +1549,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

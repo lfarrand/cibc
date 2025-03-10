@@ -1,4 +1,4 @@
-namespace CIBC;
+namespace CIBC.SourcesUsesAllocation;
 
 public class Worker : BackgroundService
 {
